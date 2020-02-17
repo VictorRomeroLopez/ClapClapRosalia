@@ -34,8 +34,8 @@ public class UpgradesLogic : MonoBehaviour
         {
             GameManager.Instance.CurrentPlayer.NailsLevel++;
 
-            if(GameManager.Instance.CurrentPlayer.NailsLevel%5 == 0)
-                GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * (nailUpgradeValue * 3);
+            if (GameManager.Instance.CurrentPlayer.NailsLevel % 5 == 0) 
+                GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * (nailUpgradeValue * 5);
             else
             GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * nailUpgradeValue;
             
