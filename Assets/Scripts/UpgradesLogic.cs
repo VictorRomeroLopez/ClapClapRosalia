@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class UpgradesLogic : MonoBehaviour
 {
-    [SerializeField] private Text nailsLevelText;
+    [SerializeField] private Text nailsPointsText;
     [SerializeField] private Text nailsCostText;
-    [SerializeField] private Text coatLevelText;
+    [SerializeField] private Text coatMaxTimeText;
     [SerializeField] private Text coatCostText;
     [SerializeField] private Text coinsCounterText;
+    [SerializeField] private Text nailsLevelText;
+    [SerializeField] private Text coatLevelText;
 
     private float nailUpgradeValue = 0.1f;
     private float jaquetUpgradeValue = 0.05f;
@@ -18,25 +20,34 @@ public class UpgradesLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nailsLevelText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
-        coatLevelText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
+        nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
+        coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
         nailsCostText.text = "Cost: " + nailCost;
         coatCostText.text = "Cost: " + coatCost;
+        nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
+        coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
     }
 
     public void UpgradeNails()
     {
         if (GameManager.Instance.CurrentPlayer.Coins >= nailCost)
         {
-            GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * nailUpgradeValue;
             GameManager.Instance.CurrentPlayer.NailsLevel++;
+
+            if(GameManager.Instance.CurrentPlayer.NailsLevel%5 == 0)
+                GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * (nailUpgradeValue * 3);
+            else
+            GameManager.Instance.CurrentPlayer.NailPointsModifier += GameManager.Instance.CurrentPlayer.NailPointsModifier * nailUpgradeValue;
+            
 
             GameManager.Instance.CurrentPlayer.Coins -= nailCost;
             nailCost += nailCost * 0.1f * GameManager.Instance.CurrentPlayer.NailsLevel;
 
-            nailsLevelText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
+            nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
             nailsCostText.text = "Cost: " + nailCost;
 
+            nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
+            
             UpdateCoinsCounter();
         }
     }
@@ -52,8 +63,10 @@ public class UpgradesLogic : MonoBehaviour
             GameManager.Instance.CurrentPlayer.Coins -= coatCost;
             coatCost += coatCost * 0.1f * GameManager.Instance.CurrentPlayer.JaquetLevel;
 
-            coatLevelText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
+            coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
             coatCostText.text = "Cost: " + coatCost;
+
+            coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
 
             UpdateCoinsCounter();
         }
