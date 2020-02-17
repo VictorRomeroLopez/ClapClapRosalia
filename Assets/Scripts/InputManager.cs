@@ -36,7 +36,7 @@ public class InputManager : Singleton<InputManager>
         {
             if (touch.phase == TouchPhase.Began)
                 TouchesPositions.Add(touch.fingerId, touch.position);
-            else if(touch.phase == TouchPhase.Ended)
+            else 
                 TouchesPositions.Remove(touch.fingerId);
         }
     }
