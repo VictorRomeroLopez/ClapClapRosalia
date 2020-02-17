@@ -12,11 +12,14 @@ public class UpgradesLogic : MonoBehaviour
     [SerializeField] private Text coinsCounterText;
     [SerializeField] private Text nailsLevelText;
     [SerializeField] private Text coatLevelText;
+    [SerializeField] private Text resetDoneText;
+    [SerializeField] private Text fansCounterText;
 
     private float nailUpgradeValue = 0.1f;
     private float jaquetUpgradeValue = 0.05f;
     private float coatCost = 100f;
     private float nailCost = 50f;
+    private float resetConverter = 1000f;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,5 +78,42 @@ public class UpgradesLogic : MonoBehaviour
     public void UpdateCoinsCounter()
     {
         coinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString();
+    }
+
+    public void UpdateFansCounter()
+    {
+        fansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
+    }
+
+    public void UpdatePowerUpsCounters()
+    {
+        nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
+        nailCost = 50f;
+        nailsCostText.text = "Cost: " + nailCost;
+        coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
+        coatCost = 100f;
+        coatCostText.text = "Cost: " + coatCost;
+        UpdateCoinsCounter();
+        nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
+        coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
+        UpdateFansCounter();
+}
+
+    public void ResetTheGame()
+    {
+        if(GameManager.Instance.CurrentPlayer.Fans >= 500f)
+        {
+            GameManager.Instance.CurrentPlayer.TapPoints +=  (GameManager.Instance.CurrentPlayer.Fans / resetConverter);
+            GameManager.Instance.CurrentPlayer.Fans = 0;
+            GameManager.Instance.CurrentPlayer.Coins = 0;
+            GameManager.Instance.CurrentPlayer.NailsLevel = 0;
+            GameManager.Instance.CurrentPlayer.NailPointsModifier = 1;
+            GameManager.Instance.CurrentPlayer.JaquetLevel = 0;
+            GameManager.Instance.CurrentPlayer.JaquetTimeModifier = 1;
+            resetDoneText.gameObject.SetActive(true);
+            UpdatePowerUpsCounters();
+        }
+
+        
     }
 }

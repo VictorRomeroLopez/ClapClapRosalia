@@ -45,7 +45,6 @@ public class GameLogic : MonoBehaviour
         gameRunning = false;
         GameManager.Instance.CurrentPlayer.Coins += points;
         if (points > GameManager.Instance.CurrentPlayer.Fans) GameManager.Instance.CurrentPlayer.Fans = points;
-        Debug.Log("Points: " + points + ", coins: " + GameManager.Instance.CurrentPlayer.Coins + ", fans: " + GameManager.Instance.CurrentPlayer.Fans);
         
 
         StartCoroutine(GameEnded());
