@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class UpgradesLogic : MonoBehaviour
 {
+    struct UpgradePanel
+    {
+        [SerializeField] private string _tittle;
+        [SerializeField] private string _hint;
+
+    }
     [SerializeField] private Text nailsPointsText;
     [SerializeField] private Text nailsCostText;
     [SerializeField] private Text coatMaxTimeText;
