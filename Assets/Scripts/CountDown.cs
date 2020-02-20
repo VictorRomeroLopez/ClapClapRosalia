@@ -39,7 +39,7 @@ public class CountDown : MonoBehaviour
             {
                 timeText.text = "0";
                 gameCountdown = false;
-                modifiedPlayTime = defaultPlayTime * GameManager.Instance.CurrentPlayer.JaquetTimeModifier;
+               
                 startMaxTime = 3.99f;
                 gL.EndGame();
                 timeText.gameObject.SetActive(false);
@@ -59,6 +59,7 @@ public class CountDown : MonoBehaviour
                 StartGameCountDown();
                 startTimeText.gameObject.SetActive(false);
                 gL.StartGame();
+                modifiedPlayTime = defaultPlayTime * GameManager.Instance.CurrentPlayer.JaquetTimeModifier;
             }
         }
     }
