@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 6896119434656315252}
   - component: {fileID: 6896119434656315253}
   m_Layer: 5
-  m_Name: PointsText
+  m_Name: LevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 6896119435117623819}
   - component: {fileID: 6896119435117623812}
   m_Layer: 5
-  m_Name: LevelText
+  m_Name: PointsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

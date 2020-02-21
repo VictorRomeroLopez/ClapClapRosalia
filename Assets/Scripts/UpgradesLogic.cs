@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UpgradesLogic : MonoBehaviour
 {
@@ -11,15 +12,24 @@ public class UpgradesLogic : MonoBehaviour
         [SerializeField] private string _hint;
 
     }
-    [SerializeField] private Text nailsPointsText;
-    [SerializeField] private Text nailsCostText;
-    [SerializeField] private Text coatMaxTimeText;
-    [SerializeField] private Text coatCostText;
+    [SerializeField] private TextMeshProUGUI nailsPointsText;
+    [SerializeField] private TextMeshProUGUI nailsCostText;
+    [SerializeField] private TextMeshProUGUI coatMaxTimeText;
+    [SerializeField] private TextMeshProUGUI coatCostText;
     [SerializeField] private Text coinsCounterText;
-    [SerializeField] private Text nailsLevelText;
-    [SerializeField] private Text coatLevelText;
+    [SerializeField] private TextMeshProUGUI nailsLevelText;
+    [SerializeField] private TextMeshProUGUI coatLevelText;
     [SerializeField] private Text resetDoneText;
     [SerializeField] private Text fansCounterText;
+    [SerializeField] private Text mainFansCounterText;
+    [SerializeField] private Text mainCoinsCounterText;
+    [SerializeField] private Text multiplierText;
+    [SerializeField] private Text futureMultiplierText;
+    [SerializeField] private Image coinsButton;
+    [SerializeField] private Image coatButton;
+    [SerializeField] private Image resetButton;
+    [SerializeField] private Color activeButtonColor;
+    [SerializeField] private Color activeResetButtonColor;
 
     private float nailUpgradeValue = 0.1f;
     private float jaquetUpgradeValue = 0.05f;
@@ -29,12 +39,46 @@ public class UpgradesLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
-        coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
-        nailsCostText.text = "Cost: " + nailCost;
-        coatCostText.text = "Cost: " + coatCost;
-        nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
-        coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
+        nailsPointsText.text = GameManager.Instance.CurrentPlayer.NailPointsModifier.ToString("F2");
+        coatMaxTimeText.text = (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier).ToString("F2");
+        nailsCostText.text = "Cost: " + nailCost.ToString("F2");
+        coatCostText.text = "Cost: " + coatCost.ToString("F2");
+        nailsLevelText.text = GameManager.Instance.CurrentPlayer.NailsLevel.ToString();
+        coatLevelText.text = GameManager.Instance.CurrentPlayer.JaquetLevel.ToString();
+
+        UpdateCoinsCounter();
+        UpdateFansCounter();
+        CheckButtons();
+    }
+
+    public void CheckButtons()
+    {
+        if (GameManager.Instance.CurrentPlayer.Coins < nailCost)
+        {
+            coinsButton.color = Color.gray;
+        }
+        else
+        {
+            coinsButton.color = activeButtonColor;
+        }
+
+        if (GameManager.Instance.CurrentPlayer.Coins < coatCost)
+        {
+            coatButton.color = Color.gray;
+        }
+        else
+        {
+            coatButton.color = activeButtonColor;
+        }
+
+        if (GameManager.Instance.CurrentPlayer.Fans < 500f)
+        {
+            resetButton.color = Color.gray;
+        }
+        else
+        {
+            resetButton.color = activeResetButtonColor;
+        }
     }
 
     public void UpgradeNails()
@@ -52,11 +96,11 @@ public class UpgradesLogic : MonoBehaviour
             GameManager.Instance.CurrentPlayer.Coins -= nailCost;
             nailCost += nailCost * 0.1f * GameManager.Instance.CurrentPlayer.NailsLevel;
 
-            nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
-            nailsCostText.text = "Cost: " + nailCost;
+            nailsPointsText.text = GameManager.Instance.CurrentPlayer.NailPointsModifier.ToString("F2");
+            nailsCostText.text = "Cost: " + nailCost.ToString("F2");
 
-            nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
-            
+            nailsLevelText.text = GameManager.Instance.CurrentPlayer.NailsLevel.ToString();
+
             UpdateCoinsCounter();
         }
     }
@@ -72,10 +116,10 @@ public class UpgradesLogic : MonoBehaviour
             GameManager.Instance.CurrentPlayer.Coins -= coatCost;
             coatCost += coatCost * 0.1f * GameManager.Instance.CurrentPlayer.JaquetLevel;
 
-            coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
-            coatCostText.text = "Cost: " + coatCost;
+            coatMaxTimeText.text = (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier).ToString("F2");
+            coatCostText.text = "Cost: " + coatCost.ToString("F2");
 
-            coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
+            coatLevelText.text = GameManager.Instance.CurrentPlayer.JaquetLevel.ToString("F2");
 
             UpdateCoinsCounter();
         }
@@ -83,27 +127,35 @@ public class UpgradesLogic : MonoBehaviour
 
     public void UpdateCoinsCounter()
     {
-        coinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString();
+        coinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString("F2");
+        mainCoinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString("F2");
+    }
+
+    public void UpdateTapMultiplier()
+    {
+        multiplierText.text = GameManager.Instance.CurrentPlayer.TapPoints.ToString("F2");
+        futureMultiplierText.text = "New multiplier: " + (GameManager.Instance.CurrentPlayer.TapPoints + (GameManager.Instance.CurrentPlayer.Fans / resetConverter)).ToString("F2");
     }
 
     public void UpdateFansCounter()
     {
         fansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
+        mainFansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
     }
 
     public void UpdatePowerUpsCounters()
     {
-        nailsPointsText.text = "Points per hit: " + GameManager.Instance.CurrentPlayer.NailPointsModifier;
+        nailsPointsText.text = GameManager.Instance.CurrentPlayer.NailPointsModifier.ToString("F2");
         nailCost = 50f;
-        nailsCostText.text = "Cost: " + nailCost;
-        coatMaxTimeText.text = "Max Time: " + (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier);
+        nailsCostText.text = "Cost: " + nailCost.ToString("F2");
+        coatMaxTimeText.text = (5 * GameManager.Instance.CurrentPlayer.JaquetTimeModifier).ToString("F2");
         coatCost = 100f;
-        coatCostText.text = "Cost: " + coatCost;
+        coatCostText.text = "Cost: " + coatCost.ToString("F2");
         UpdateCoinsCounter();
-        nailsLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.NailsLevel;
-        coatLevelText.text = "Level: " + GameManager.Instance.CurrentPlayer.JaquetLevel;
+        nailsLevelText.text = GameManager.Instance.CurrentPlayer.NailsLevel.ToString();
+        coatLevelText.text = GameManager.Instance.CurrentPlayer.JaquetLevel.ToString();
         UpdateFansCounter();
-}
+    }
 
     public void ResetTheGame()
     {

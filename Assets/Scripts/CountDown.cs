@@ -8,6 +8,8 @@ public class CountDown : MonoBehaviour
     [SerializeField] private Text timeText;
     [SerializeField] private Text startTimeText;
     [SerializeField] private GameLogic gL;
+    [SerializeField] private GameObject timePanel;
+    [SerializeField] private GameObject startTimePanel;
 
     private float defaultPlayTime = 5f;
 
@@ -43,6 +45,7 @@ public class CountDown : MonoBehaviour
                 startMaxTime = 3.99f;
                 gL.EndGame();
                 timeText.gameObject.SetActive(false);
+                timePanel.SetActive(false);
             }
         }
         else if(startCountdown)
@@ -56,8 +59,10 @@ public class CountDown : MonoBehaviour
                 startTimeText.text = "0";
                 startCountdown = false;
                 timeText.gameObject.SetActive(true);
+                timePanel.SetActive(true);
                 StartGameCountDown();
                 startTimeText.gameObject.SetActive(false);
+                startTimePanel.SetActive(false);
                 gL.StartGame();
                 modifiedPlayTime = defaultPlayTime * GameManager.Instance.CurrentPlayer.JaquetTimeModifier;
             }
@@ -68,6 +73,7 @@ public class CountDown : MonoBehaviour
     {
         startCountdown = true;
         startTimeText.gameObject.SetActive(true);
+        startTimePanel.SetActive(true);
     }
 
     public void StartGameCountDown()

@@ -6,7 +6,7 @@ public class Player
     public float NailPointsModifier { get; set; }
     public float JaquetTimeModifier { get; set; }
     public float Coins { get; set; }
-    public float Fans { get; set; }
+    public int Fans { get; set; }
     public int NailsLevel { get; set; }
     public int JaquetLevel { get; set; }
 

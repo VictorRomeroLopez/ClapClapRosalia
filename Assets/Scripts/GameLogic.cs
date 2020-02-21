@@ -11,6 +11,8 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private Text endGameText;
     [SerializeField] private GameObject MainCanvas;
     [SerializeField] private GameObject GameCanvas;
+    [SerializeField] private UpgradesLogic uL;
+    [SerializeField] private GameObject endGamePanel;
     private bool gameRunning = false;
     private float points = 0;
 
@@ -26,7 +28,7 @@ public class GameLogic : MonoBehaviour
                     ParticleSystem nps = Instantiate(hitPS, Camera.main.ScreenToWorldPoint(InputManager.Instance.Touches[i].position), Quaternion.identity);
                     nps.Play();
                     points += GameManager.Instance.CurrentPlayer.TapPoints * GameManager.Instance.CurrentPlayer.NailPointsModifier;
-                    pointsText.text = points.ToString();
+                    pointsText.text = points.ToString("F2");
                 }
             }
         }
@@ -44,7 +46,7 @@ public class GameLogic : MonoBehaviour
     {
         gameRunning = false;
         GameManager.Instance.CurrentPlayer.Coins += points;
-        if (points > GameManager.Instance.CurrentPlayer.Fans) GameManager.Instance.CurrentPlayer.Fans = points;
+        if (points > GameManager.Instance.CurrentPlayer.Fans) GameManager.Instance.CurrentPlayer.Fans = (int)points;
         
 
         StartCoroutine(GameEnded());
@@ -53,10 +55,14 @@ public class GameLogic : MonoBehaviour
     IEnumerator GameEnded()
     {
         endGameText.gameObject.SetActive(true);
+        endGamePanel.SetActive(true);
         yield return new WaitForSeconds(2);
 
+        uL.UpdateCoinsCounter();
+        uL.UpdateFansCounter();
         pointsText.gameObject.SetActive(false);
         endGameText.gameObject.SetActive(false);
+        endGamePanel.SetActive(false);
         MainCanvas.SetActive(true);
         GameCanvas.SetActive(false);
     }
