@@ -9,6 +9,7 @@ public class Player
     public int Fans { get; set; }
     public int NailsLevel { get; set; }
     public int JaquetLevel { get; set; }
+    public int ArtistTier { get; set; }
 
     public Player()
     {
@@ -16,9 +17,10 @@ public class Player
         PasivePoints = 0;
         NailPointsModifier = 1;
         JaquetTimeModifier = 1;
-        Coins = 0;
-        Fans = 0;
+        Coins = 10000;
+        Fans = 10000;
         NailsLevel = 0;
         JaquetLevel = 0;
+        ArtistTier = 0;
     }
 }

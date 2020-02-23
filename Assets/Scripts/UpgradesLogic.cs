@@ -22,7 +22,9 @@ public class UpgradesLogic : MonoBehaviour
     [SerializeField] private Text resetDoneText;
     [SerializeField] private Text fansCounterText;
     [SerializeField] private Text mainFansCounterText;
+    [SerializeField] private Text tierFansCounterText;
     [SerializeField] private Text mainCoinsCounterText;
+    [SerializeField] private Text tierCoinsCounterText;
     [SerializeField] private Text multiplierText;
     [SerializeField] private Text futureMultiplierText;
     [SerializeField] private Image coinsButton;
@@ -129,6 +131,7 @@ public class UpgradesLogic : MonoBehaviour
     {
         coinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString("F2");
         mainCoinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString("F2");
+        tierCoinsCounterText.text = "Coins: " + GameManager.Instance.CurrentPlayer.Coins.ToString("F2");
     }
 
     public void UpdateTapMultiplier()
@@ -141,6 +144,7 @@ public class UpgradesLogic : MonoBehaviour
     {
         fansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
         mainFansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
+        tierFansCounterText.text = "Nº Fans: " + GameManager.Instance.CurrentPlayer.Fans;
     }
 
     public void UpdatePowerUpsCounters()
