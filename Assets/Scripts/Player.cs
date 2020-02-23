@@ -17,8 +17,8 @@ public class Player
         PasivePoints = 0;
         NailPointsModifier = 1;
         JaquetTimeModifier = 1;
-        Coins = 10000;
-        Fans = 10000;
+        Coins = 0;
+        Fans = 0;
         NailsLevel = 0;
         JaquetLevel = 0;
         ArtistTier = 0;
